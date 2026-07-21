@@ -30,12 +30,9 @@ def get_root():
 def get_health():
     return {"status": "ok"}
 
-@app.get("/tasks", description="Get tasks")
-def get_tasks(done: Optional[bool] =  None):
-    if done is None:
-        return tasks
-    
-    return [task for task in tasks if task["done"] == done]
+@app.get("/tasks", description="Get all tasks")
+def get_tasks():
+    return tasks
 
 @app.get("/tasks/{task_id}", description="Get task by ID")
 def get_task_by_id(task_id: int):
@@ -48,6 +45,13 @@ def get_task_by_id(task_id: int):
         )
     
     return task
+
+@app.get("/tasks", description="Get tasks")
+def get_task_by_status(done: Optional[bool] =  None):
+    if done is None:
+        return tasks
+    
+    return [task for task in tasks if task["done"] == done]
 
 @app.post("/tasks", description="Create new task")
 def add_new_task(title: str):
@@ -68,6 +72,13 @@ def add_new_task(title: str):
         status_code=201,
         content=new_task
     )   
+
+@app.get("/tasks")
+def get_tasks(search: str | None = None):
+    if search is None:
+        return tasks
+
+    return [task for task in tasks if search.lower() in task["title"].lower()]
 
 @app.put("/tasks/{task_id}", description="Update task")
 def update_task(task_id: int, title: str, done: bool):

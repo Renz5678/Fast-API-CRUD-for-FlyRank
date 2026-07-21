@@ -13,6 +13,7 @@ A simple API built with FastAPI that demonstrates basic CRUD for tasks
 - Create a new task
 - Update a task
 - Delete a task
+- Get task by status
 
 ---
 
