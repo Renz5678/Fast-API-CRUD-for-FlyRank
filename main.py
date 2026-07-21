@@ -21,19 +21,19 @@ tasks = [
     }, 
 ]
 
-@app.get("/")
+@app.get("/", description="Get root endpoint")
 def get_root():
     return { "name": "Task API", "version": "1.0", "endpoints": ["/tasks"] }
 
-@app.get("/health")
+@app.get("/health", description="Get API health status")
 def get_health():
     return {"status": "ok"}
 
-@app.get("/tasks")
+@app.get("/tasks", description="Get all tasks")
 def get_tasks():
     return tasks
 
-@app.get("/tasks/{task_id}")
+@app.get("/tasks/{task_id}", description="Get task by ID")
 def get_task_by_id(task_id: int):
     task = next((task for task in tasks if task["id"] == task_id), None)
 
@@ -45,7 +45,7 @@ def get_task_by_id(task_id: int):
     
     return task
 
-@app.post("/tasks")
+@app.post("/tasks", description="Create new task")
 def add_new_task(title: str):
     if title == "":
         return JSONResponse(
@@ -65,7 +65,7 @@ def add_new_task(title: str):
         content=new_task
     )   
 
-@app.put("/tasks/{task_id}")
+@app.put("/tasks/{task_id}", description="Update task")
 def update_task(task_id: int, title: str, done: bool):
     task = next((task for task in tasks if task["id"] == task_id), None)
 
@@ -89,7 +89,7 @@ def update_task(task_id: int, title: str, done: bool):
         content=task
     )
 
-@app.delete("/tasks/{task_id}")
+@app.delete("/tasks/{task_id}", description="Delete task")
 def delete_task(task_id: int):
     task = next((task for task in tasks if task["id"] == task_id), None)
 
