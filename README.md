@@ -74,6 +74,21 @@ http://127.0.0.1:8000/docs
 | PUT | `/tasks/{task_id}` | Update a task |
 | DELETE | `/tasks/{task_id}` | Delete a task |
 
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/` | Returns API information |
+| GET | `/health` | Returns the server health status |
+| GET | `/tasks` | Returns all tasks |
+| GET | `/tasks/{task_id}` | Returns a specific task by ID |
+| GET | `/tasks?done=true` | Returns only completed tasks |
+| GET | `/tasks?done=false` | Returns only incomplete tasks |
+| GET | `/tasks?search={keyword}` | Returns tasks whose title contains the specified keyword |
+| POST | `/tasks` | Creates a new task |
+| PUT | `/tasks/{task_id}` | Updates an existing task |
+| DELETE | `/tasks/{task_id}` | Deletes a task |
+| GET | `/stats` | Returns task statistics (`total`, `done`, `open`) |
+| POST | `/reset` | Resets the task list to the default sample data |
 ---
 
 ## Example Request
