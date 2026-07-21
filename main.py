@@ -73,12 +73,33 @@ def add_new_task(title: str):
         content=new_task
     )   
 
-@app.get("/tasks")
+@app.get("/tasks", description="Get task if string exists in title")
 def get_tasks(search: str | None = None):
     if search is None:
         return tasks
 
     return [task for task in tasks if search.lower() in task["title"].lower()]
+
+@app.get("/stats", description="Get stats")
+def get_stats():
+    total = 0
+    done = 0
+    open = 0
+
+    for task in tasks:
+        if task["done"]:
+            done += 1
+        else:
+            open += 1
+
+    return JSONResponse(
+        status_code=200,
+        content={
+            "total": total,
+            "done": done,
+            "open": open
+        }
+    )
 
 @app.put("/tasks/{task_id}", description="Update task")
 def update_task(task_id: int, title: str, done: bool):
@@ -119,3 +140,4 @@ def delete_task(task_id: int):
     return Response(
         status_code=204
     )
+
