@@ -95,7 +95,7 @@ def get_stats():
     return JSONResponse(
         status_code=200,
         content={
-            "total": total,
+            "total": done + open,
             "done": done,
             "open": open
         }
