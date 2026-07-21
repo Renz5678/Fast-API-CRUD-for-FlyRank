@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Response
 from fastapi.responses import JSONResponse
+from typing import Optional
 
 app = FastAPI()
 
@@ -29,9 +30,12 @@ def get_root():
 def get_health():
     return {"status": "ok"}
 
-@app.get("/tasks", description="Get all tasks")
-def get_tasks():
-    return tasks
+@app.get("/tasks", description="Get tasks")
+def get_tasks(done: Optional[bool] =  None):
+    if done is None:
+        return tasks
+    
+    return [task for task in tasks if task["done"] == done]
 
 @app.get("/tasks/{task_id}", description="Get task by ID")
 def get_task_by_id(task_id: int):
