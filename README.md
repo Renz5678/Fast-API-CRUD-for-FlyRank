@@ -13,7 +13,10 @@ A simple API built with FastAPI that demonstrates basic CRUD for tasks
 - Create a new task
 - Update a task
 - Delete a task
-- Get task by status
+- Filter tasks by completion status (`GET /tasks?done=true`)
+- Search tasks by title (`GET /tasks?search=keyword`)
+- View task statistics (`GET /stats`)
+- Reset tasks to the default dataset (`POST /reset`)
 
 ---
 
@@ -118,3 +121,7 @@ http://127.0.0.1:8000/docs
 
 ### Screenshot
 ![Swagger UI](fastapi_screenshot.png)
+
+## Mortality Experiment
+
+After creating several new tasks and restarting the FastAPI server, the newly created tasks disappeared and only the original sample tasks remained. This happens because the application stores its data in memory, so restarting the server recreates the initial task list and discards any changes made while the application was running.
