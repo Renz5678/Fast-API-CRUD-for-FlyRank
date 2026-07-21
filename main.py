@@ -22,6 +22,8 @@ tasks = [
     }, 
 ]
 
+seed_tasks = tasks
+
 @app.get("/", description="Get root endpoint")
 def get_root():
     return { "name": "Task API", "version": "1.0", "endpoints": ["/tasks"] }
@@ -72,6 +74,15 @@ def add_new_task(title: str):
         status_code=201,
         content=new_task
     )   
+
+@app.post("/reset", description="Reset tasks")
+def reset_tasks():
+    tasks = seed_tasks
+
+    return JSONResponse(
+        status_code=200,
+        content=tasks
+    )
 
 @app.get("/tasks", description="Get task if string exists in title")
 def get_tasks(search: str | None = None):
