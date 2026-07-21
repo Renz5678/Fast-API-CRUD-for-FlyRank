@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Response
 from fastapi.responses import JSONResponse
 
 app = FastAPI()
@@ -33,22 +33,21 @@ def get_health():
 def get_tasks():
     return tasks
 
-@app.get("/tasks/{item_id}")
-def get_task_by_id(item_id: int):
-    task = next((task for task in tasks if task["id"] == item_id), None)
+@app.get("/tasks/{task_id}")
+def get_task_by_id(task_id: int):
+    task = next((task for task in tasks if task["id"] == task_id), None)
 
     if task is None:
         return JSONResponse(
             status_code=404,
-            content={"error": f"Task {item_id} not found"}
+            content={"error": f"Task {task_id} not found!"}
         )
     
     return task
 
 @app.post("/tasks")
 def add_new_task(title: str):
-
-    if title is "":
+    if title == "":
         return JSONResponse(
             status_code=400,
             content={"error": "Missing title!"}
@@ -65,3 +64,43 @@ def add_new_task(title: str):
         status_code=201,
         content=new_task
     )   
+
+@app.put("/tasks/{task_id}")
+def update_task(task_id: int, title: str, done: bool):
+    task = next((task for task in tasks if task["id"] == task_id), None)
+
+    if title is None or done is None:
+            return JSONResponse(
+            status_code=400,
+            content={"error": f"Empty request body!"}
+        )
+
+    if task is None:
+        return JSONResponse(
+            status_code=404,
+            content={"error": f"Task {task_id} not found!"}
+        )
+    
+    task["title"] = title
+    task["done"] =  done
+
+    return JSONResponse(
+        status_code=200,
+        content=task
+    )
+
+@app.delete("/tasks/{task_id}")
+def delete_task(task_id: int):
+    task = next((task for task in tasks if task["id"] == task_id), None)
+
+    if task is None:
+        return JSONResponse(
+            status_code=404,
+            content={"error": f"Task {task_id} not found!"}
+        )
+    
+    tasks.remove(task)
+
+    return Response(
+        status_code=204
+    )
