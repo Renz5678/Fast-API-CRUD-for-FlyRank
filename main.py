@@ -44,3 +44,24 @@ def get_task_by_id(item_id: int):
         )
     
     return task
+
+@app.post("/tasks")
+def add_new_task(title: str):
+
+    if title is "":
+        return JSONResponse(
+            status_code=400,
+            content={"error": "Missing title!"}
+        )
+    
+    new_task = {
+        "id": len(tasks) + 1,
+        "title": title,
+        "done": False
+    }
+    tasks.append(new_task)
+
+    return JSONResponse(
+        status_code=201,
+        content=new_task
+    )   
