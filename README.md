@@ -66,17 +66,6 @@ http://127.0.0.1:8000/docs
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| GET | `/` | API information |
-| GET | `/health` | Health check |
-| GET | `/tasks` | Get all tasks |
-| GET | `/tasks/{task_id}` | Get a task by ID |
-| POST | `/tasks` | Create a new task |
-| PUT | `/tasks/{task_id}` | Update a task |
-| DELETE | `/tasks/{task_id}` | Delete a task |
-
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
 | GET | `/` | Returns API information |
 | GET | `/health` | Returns the server health status |
 | GET | `/tasks` | Returns all tasks |
